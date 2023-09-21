@@ -1,5 +1,11 @@
 import { FieldsError } from '../validators/validator-fields.interface'
 
+/**
+ * @class ValidatorError
+ * @extends {Error}
+ * @description Classe de erro para validação de dados.
+ */
+
 export class ValidatorError extends Error {}
 
 export class EntityValidationError extends Error {

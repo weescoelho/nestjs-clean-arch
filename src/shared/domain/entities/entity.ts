@@ -1,5 +1,11 @@
 import { v4 as uuidv4 } from 'uuid'
 
+/**
+ * Criação da classe abstrata Entity.
+ * Todas as entidades iram herdar dessa classe, que possui um id único e um método toJSON.
+ * As props seram passadas via generics.
+ */
+
 export abstract class Entity<Props = any> {
   public readonly _id: string
   public readonly props: Props

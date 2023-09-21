@@ -1,6 +1,14 @@
 import { IsNotEmpty, IsNumber, IsString, MaxLength } from 'class-validator'
 import { ClassValidatorFields } from '../../class-validator-fields'
 
+/**
+ * StubClassValidatorFields cria um dublê de teste para a classe abstrata ClassValidatorFields.
+ * StubRules é uma classe que dita as regras de validação para o stub.
+ *
+ * O teste de integração é feito para garantir que a classe ClassValidatorFields está funcionando corretamente,
+ * juntamente com a biblioteca class-validator.
+ */
+
 class StubRules {
   @MaxLength(255)
   @IsString()

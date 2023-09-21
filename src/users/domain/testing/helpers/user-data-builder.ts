@@ -8,6 +8,11 @@ type Props = {
   createdAt?: Date
 }
 
+/**
+ * @class UserDataBuilder
+ * @description é responsável por construir dados de usuário para serem usados nos testes.
+ */
+
 export function UserDataBuilder(props: Props): UserProps {
   return {
     name: props.name ?? faker.person.fullName(),

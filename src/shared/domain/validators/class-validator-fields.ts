@@ -4,6 +4,11 @@ import {
   ValidatorFieldsInterface,
 } from './validator-fields.interface'
 
+/**
+ * @class ClassValidatorFields
+ * @description Classe abstrata para validação de dados com class-validator.
+ */
+
 export abstract class ClassValidatorFields<T>
   implements ValidatorFieldsInterface<T>
 {

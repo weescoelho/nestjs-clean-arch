@@ -1,6 +1,11 @@
 import { validate as uuidValidate } from 'uuid'
 import { Entity } from '../entity'
 
+/**
+ * StubEntity é uma classe que herda de Entity, para ser usada nos testes.
+ * Em testes de classes abstratas, é necessário criar uma classe que herde da classe abstrata.
+ */
+
 type StubProps = {
   prop1: string
   prop2: number

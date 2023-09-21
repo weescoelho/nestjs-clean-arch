@@ -9,6 +9,17 @@ export type UserProps = {
   createdAt?: Date
 }
 
+/**
+ * @class UserEntity
+ * @extends {Entity<UserProps>}
+ * @description Classe de entidade de usuário.
+ *
+ * A classe de entidade é responsável por representar um usuário.
+ * Está extendendo a classe abstrata Entity, que é responsável por gerar um id único para a entidade.
+ * O generics UserProps é responsável por tipar as props da entidade.
+ *
+ */
+
 export class UserEntity extends Entity<UserProps> {
   constructor(public readonly props: UserProps) {
     UserEntity.validate(props)

@@ -1,6 +1,11 @@
 import { ClassValidatorFields } from '../../class-validator-fields'
 import * as libClassValidator from 'class-validator'
 
+/**
+ * StubClassValidatorFields cria um dublê de teste para a classe abstrata ClassValidatorFields.
+ * A classe abstrata ClassValidatorFields é uma classe abstrata que implementa a interface ValidatorFieldsInterface.
+ */
+
 class StubClassValidatorFields extends ClassValidatorFields<{
   field: string
 }> {}

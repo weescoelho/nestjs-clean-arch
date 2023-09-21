@@ -2,6 +2,10 @@ import { NotFoundException } from '@nestjs/common'
 import { Entity } from '../entities/entity'
 import { RepositoryInterface } from './repository-contracts'
 
+/**
+ * InMemoryRepository, é uma classe abstrata onde é feito a implementação de um repositório em memória.
+ */
+
 export abstract class InMemoryRepository<E extends Entity>
   implements RepositoryInterface<E>
 {
