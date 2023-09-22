@@ -29,31 +29,73 @@ export class SearchParams {
     return this._page
   }
 
-  private set page(page: number) {}
+  private set page(page: number) {
+    let _page = Number(page)
+    if (Number.isNaN(_page) || _page <= 0 || parseInt(_page as any) !== _page) {
+      _page = 1
+    }
+    this._page = _page
+  }
 
   get perPage(): number {
     return this._perPage
   }
 
-  private set perPage(perPage: number) {}
+  private set perPage(perPage: number) {
+    let _perPage = Number(perPage)
+    if (
+      Number.isNaN(_perPage) ||
+      _perPage <= 0 ||
+      parseInt(_perPage as any) !== _perPage
+    ) {
+      _perPage = this._perPage
+    }
+    this._perPage = _perPage
+  }
 
   get sort(): string | null {
     return this._sort
   }
 
-  private set sort(sort: string | null) {}
+  private set sort(sort: string | null) {
+    if (sort === null || sort === undefined || sort === '') {
+      this._sort = null
+    }
+
+    const [field, dir] = sort.split(':')
+    if (dir !== 'asc' && dir !== 'desc') {
+      throw new Error('Invalid sort direction')
+    }
+    this._sort = field
+    this._sortDir = dir
+  }
 
   get sortDir(): SortDirection | null {
     return this._sortDir
   }
 
-  private set sortDir(sortDir: SortDirection | null) {}
+  private set sortDir(value: SortDirection | null) {
+    if (value === null) {
+      this._sortDir = null
+      return
+    }
+    if (value !== 'asc' && value !== 'desc') {
+      this._sortDir = 'asc'
+      return
+    }
+
+    const dir = `${value}`.toLowerCase() as SortDirection
+    this._sortDir = dir
+  }
 
   get filter(): string | null {
     return this._filter
   }
 
-  private set filter(filter: string | null) {}
+  private set filter(filter: string | null) {
+    this._filter =
+      filter === null || filter === undefined || filter === '' ? null : filter
+  }
 }
 
 export interface SearcheableRepositoryInterface<
