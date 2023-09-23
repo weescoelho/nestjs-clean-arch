@@ -61,7 +61,35 @@ describe('InMemorySearcheableRepository unit tests', () => {
     })
   })
 
-  describe('applySort method', () => {})
+  describe('applySort method', () => {
+    it('should no sort items', async () => {
+      const items = [
+        new StubEntity({ name: 'a', price: 10 }),
+        new StubEntity({ name: 'b', price: 10 }),
+        ,
+      ]
+
+      let result = await sut['applySort'](items, null)
+      expect(result).toStrictEqual(result)
+
+      result = await sut['applySort'](items, 'price:asc')
+      expect(result).toStrictEqual(result)
+    })
+
+    it('should sort items', async () => {
+      const items = [
+        new StubEntity({ name: 'b', price: 10 }),
+        new StubEntity({ name: 'a', price: 10 }),
+        new StubEntity({ name: 'c', price: 10 }),
+      ]
+
+      let result = await sut['applySort'](items, 'name:asc')
+      expect(result).toStrictEqual([items[1], items[0], items[2]])
+
+      result = await sut['applySort'](items, 'name:desc')
+      expect(result).toStrictEqual([items[2], items[0], items[1]])
+    })
+  })
 
   describe('applyPaginate method', () => {})
 
