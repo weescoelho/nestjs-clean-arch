@@ -35,7 +35,7 @@ export abstract class InMemorySearcheableRepository<E extends Entity>
   ): Promise<E[]>
 
   protected async applySort(items: E[], sort: string | null): Promise<E[]> {
-    if (!sort || this.sortableFields.includes(sort)) return items
+    if (!sort || !this.sortableFields.includes(sort)) return items
     const [field, direction] = sort.split(':')
 
     return [...items].sort((a, b) => {
