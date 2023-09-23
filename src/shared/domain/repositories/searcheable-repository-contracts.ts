@@ -17,12 +17,12 @@ export class SearchParams {
   protected _sortDir: SortDirection | null
   protected _filter: string | null
 
-  constructor(props: SearchProps) {
-    this._page = props.page || 1
-    this._perPage = props.perPage || 15
-    this._sort = props.sort || null
-    this._sortDir = props.sortDir || null
-    this._filter = props.filter || null
+  constructor(props: SearchProps = {}) {
+    this.page = props.page || 1
+    this.perPage = props.perPage || 15
+    this.sort = props.sort || null
+    this.sortDir = props.sortDir || null
+    this.filter = props.filter || null
   }
 
   get page(): number {
@@ -42,7 +42,7 @@ export class SearchParams {
   }
 
   private set perPage(perPage: number) {
-    let _perPage = Number(perPage)
+    let _perPage = perPage === (true as any) ? this._perPage : Number(perPage)
     if (
       Number.isNaN(_perPage) ||
       _perPage <= 0 ||
@@ -58,33 +58,46 @@ export class SearchParams {
   }
 
   private set sort(sort: string | null) {
-    if (sort === null || sort === undefined || sort === '') {
+    if (
+      sort === null ||
+      sort === undefined ||
+      sort === '' ||
+      typeof sort !== 'string' ||
+      sort === ' '
+    ) {
       this._sort = null
+      return
     }
 
     const [field, dir] = sort.split(':')
+
     if (dir !== 'asc' && dir !== 'desc') {
-      throw new Error('Invalid sort direction')
+      this._sort = field
+      this._sortDir = 'asc'
     }
-    this._sort = field
-    this._sortDir = dir
+
+    this._sort = `${field}`
+    this._sortDir = dir as SortDirection
   }
 
   get sortDir(): SortDirection | null {
     return this._sortDir
   }
 
-  private set sortDir(value: SortDirection | null) {
-    if (value === null) {
+  private set sortDir(value: string | null) {
+    console.log(value)
+    if (!this.sort) {
       this._sortDir = null
       return
     }
-    if (value !== 'asc' && value !== 'desc') {
-      this._sortDir = 'asc'
+
+    const dir = `${value}`.toLowerCase()
+
+    if (dir !== 'asc' && dir !== 'desc') {
+      this._sortDir = 'desc'
       return
     }
 
-    const dir = `${value}`.toLowerCase() as SortDirection
     this._sortDir = dir
   }
 
@@ -94,7 +107,13 @@ export class SearchParams {
 
   private set filter(filter: string | null) {
     this._filter =
-      filter === null || filter === undefined || filter === '' ? null : filter
+      filter === null ||
+      filter === undefined ||
+      filter === '' ||
+      filter === ' ' ||
+      typeof filter === 'boolean'
+        ? null
+        : `${filter}`
   }
 }
 
