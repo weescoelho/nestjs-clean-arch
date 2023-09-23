@@ -2,12 +2,22 @@ import { Entity } from '../entities/entity'
 import { RepositoryInterface } from './repository-contracts'
 
 export type SortDirection = 'asc' | 'desc'
+
 export type SearchProps<Filter = string> = {
   page?: number
   perPage?: number
   sort?: string | null
   sortDir?: SortDirection | null
   filter?: Filter | null
+}
+
+export type SearchResultProps<E extends Entity, Filter> = {
+  items: E[]
+  total: number
+  currentPage: number
+  perPage: number
+  sort: string | null
+  filter: Filter | null
 }
 
 export class SearchParams {
@@ -73,11 +83,11 @@ export class SearchParams {
 
     if (dir !== 'asc' && dir !== 'desc') {
       this._sort = field
-      this._sortDir = 'asc'
+      this.sortDir = 'asc'
     }
 
     this._sort = `${field}`
-    this._sortDir = dir as SortDirection
+    this.sortDir = dir as SortDirection
   }
 
   get sortDir(): SortDirection | null {
@@ -117,10 +127,43 @@ export class SearchParams {
   }
 }
 
+export class SearchResult<E extends Entity, Filter = string> {
+  readonly items: E[]
+  readonly total: number
+  readonly currentPage: number
+  readonly perPage: number
+  readonly lastPage: number
+  readonly sort: string | null
+  readonly filter: Filter | null
+
+  constructor(props: SearchResultProps<E, Filter>) {
+    this.items = props.items
+    this.total = props.total
+    this.currentPage = props.currentPage
+    this.perPage = props.perPage
+    this.lastPage = Math.ceil(this.total / this.perPage)
+    this.sort = props.sort ?? null
+    this.filter = props.filter ?? null
+  }
+
+  toJSON(forceEntity = false) {
+    return {
+      items: forceEntity ? this.items.map(item => item.toJSON()) : this.items,
+      total: this.total,
+      currentPage: this.currentPage,
+      perPage: this.perPage,
+      lastPage: this.lastPage,
+      sort: this.sort,
+      filter: this.filter,
+    }
+  }
+}
+
 export interface SearcheableRepositoryInterface<
   E extends Entity,
-  SearchInput,
-  SearchOutput,
+  Filter = string,
+  SearchInput = SearchParams,
+  SearchOutput = SearchResult<E, Filter>,
 > extends RepositoryInterface<E> {
-  search(searchInput: SearchParams): Promise<SearchOutput>
+  search(searchInput: SearchInput): Promise<SearchOutput>
 }
