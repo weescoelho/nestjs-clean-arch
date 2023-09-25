@@ -5,6 +5,8 @@ import {
   SearcheableRepositoryInterface,
 } from './searcheable-repository-contracts'
 import { InMemoryRepository } from './in-memory.repository'
+import { start } from 'repl'
+import { async } from 'rxjs'
 
 export abstract class InMemorySearcheableRepository<E extends Entity>
   extends InMemoryRepository<E>
@@ -14,7 +16,11 @@ export abstract class InMemorySearcheableRepository<E extends Entity>
 
   async search(searchInput: SearchParams): Promise<SearchResult<E>> {
     const itemsFiltered = await this.applyFilter(this.items, searchInput.filter)
-    const itemsSorted = await this.applySort(itemsFiltered, searchInput.sort)
+    const itemsSorted = await this.applySort(
+      itemsFiltered,
+      searchInput.sort,
+      searchInput.sortDir,
+    )
     const itemsPaginated = await this.applyPaginate(
       itemsSorted,
       searchInput.page,
@@ -34,17 +40,20 @@ export abstract class InMemorySearcheableRepository<E extends Entity>
     filter: string | null,
   ): Promise<E[]>
 
-  protected async applySort(items: E[], sort: string | null): Promise<E[]> {
+  protected async applySort(
+    items: E[],
+    sort: string | null,
+    sortDir: string | null,
+  ): Promise<E[]> {
     if (!sort) return items
+    if (!sortDir) sortDir = 'desc'
+    console.log({ sort, sortDir })
 
-    const [field, direction] = sort.split(':')
-
-    if (!field || !direction) return items
-    if (!this.sortableFields.includes(field)) return items
+    if (!this.sortableFields.includes(sort)) return items
 
     return [...items].sort((a, b) => {
-      if (a.props[field] < b.props[field]) return direction === 'asc' ? -1 : 1
-      if (a.props[field] > b.props[field]) return direction === 'asc' ? 1 : -1
+      if (a.props[sort] < b.props[sort]) return sortDir === 'asc' ? -1 : 1
+      if (a.props[sort] > b.props[sort]) return sortDir === 'asc' ? 1 : -1
 
       return 0
     })

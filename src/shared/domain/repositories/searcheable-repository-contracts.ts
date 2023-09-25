@@ -95,7 +95,6 @@ export class SearchParams {
   }
 
   private set sortDir(value: string | null) {
-    console.log(value)
     if (!this.sort) {
       this._sortDir = null
       return
