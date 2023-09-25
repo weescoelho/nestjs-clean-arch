@@ -35,9 +35,12 @@ export abstract class InMemorySearcheableRepository<E extends Entity>
   ): Promise<E[]>
 
   protected async applySort(items: E[], sort: string | null): Promise<E[]> {
+    if (!sort) return items
+
     const [field, direction] = sort.split(':')
+
     if (!field || !direction) return items
-    if (!sort || !this.sortableFields.includes(field)) return items
+    if (!this.sortableFields.includes(field)) return items
 
     return [...items].sort((a, b) => {
       if (a.props[field] < b.props[field]) return direction === 'asc' ? -1 : 1
