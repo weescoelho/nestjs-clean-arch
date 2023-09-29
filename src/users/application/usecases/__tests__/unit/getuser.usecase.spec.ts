@@ -1,5 +1,4 @@
-import { UserRepository } from '@/users/domain/repositories/user.repository'
-import { GetUser } from '../../getuser.usecase'
+import { GetUserUseCase } from '../../getuser.usecase'
 
 import { UserInMemoryRepository } from '@/users/infrastructure/database/in-memory/repositories/user-in-memory.repository'
 import { NotFoundError } from '@/shared/domain/error/not-found-error'
@@ -7,12 +6,12 @@ import { UserEntity } from '@/users/domain/entities/user.entity'
 import { UserDataBuilder } from '@/users/domain/testing/helpers/user-data-builder'
 
 describe('GetUserUseCase unit tests', () => {
-  let sut: GetUser.UseCase
+  let sut: GetUserUseCase
   let repository: UserInMemoryRepository
 
   beforeEach(() => {
     repository = new UserInMemoryRepository()
-    sut = new GetUser.UseCase(repository)
+    sut = new GetUserUseCase(repository)
   })
 
   it('should throw error when entity not found', async () => {

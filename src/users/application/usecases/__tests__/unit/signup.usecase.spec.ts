@@ -3,19 +3,18 @@ import { SignUpUseCase } from '../../signup.usecase'
 import { HashProvider } from '@/shared/application/providers/hash-provider'
 import { BcryptjsHashProvider } from '@/users/infrastructure/providers/hash-provider/bcryptjs-hash-provider'
 import { UserDataBuilder } from '@/users/domain/testing/helpers/user-data-builder'
-import e from 'express'
 import { ConflictError } from '@/shared/domain/error/conflict-error'
 import { BadRequestError } from '@/users/application/errors/bad-request-error'
 
 describe('SignUpUseCase unit test', () => {
-  let sut: SignUpUseCase.UseCase
+  let sut: SignUpUseCase
   let repository: UserInMemoryRepository
   let hashProvider: HashProvider
 
   beforeEach(() => {
     repository = new UserInMemoryRepository()
     hashProvider = new BcryptjsHashProvider()
-    sut = new SignUpUseCase.UseCase(repository, hashProvider)
+    sut = new SignUpUseCase(repository, hashProvider)
   })
 
   it('should create a user', async () => {

@@ -1,19 +1,18 @@
 import { UserRepository } from '@/users/domain/repositories/user.repository'
 import { UserOutput } from '../dtos/user-output'
+import { UseCase } from '@/shared/application/usecases/use-case'
 
-export namespace GetUser {
-  type Input = {
-    id: string
-  }
+type GetUserInput = {
+  id: string
+}
 
-  export type Output = UserOutput
+export type GetUserOutput = UserOutput
 
-  export class UseCase {
-    constructor(private userRepository: UserRepository.Repository) {}
+export class GetUserUseCase implements UseCase<GetUserInput, GetUserOutput> {
+  constructor(private userRepository: UserRepository.Repository) {}
 
-    async execute(input: Input): Promise<Output> {
-      const entity = await this.userRepository.findById(input.id)
-      return entity.toJSON()
-    }
+  async execute(input: GetUserInput): Promise<GetUserOutput> {
+    const entity = await this.userRepository.findById(input.id)
+    return entity.toJSON()
   }
 }
