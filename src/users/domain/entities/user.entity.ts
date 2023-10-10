@@ -27,6 +27,7 @@ export class UserEntity extends Entity<UserProps> {
     this.props.createdAt = this.props.createdAt ?? new Date()
   }
 
+  //Regras do DDD = Qualquer alteração, validação ou regra de negócio deve ser feita dentro da entidade.
   update(value: string): void {
     UserEntity.validate({ ...this.props, name: value })
     this.name = value

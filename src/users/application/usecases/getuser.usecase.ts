@@ -1,5 +1,5 @@
 import { UserRepository } from '@/users/domain/repositories/user.repository'
-import { UserOutput } from '../dtos/user-output'
+import { UserOutput, UserOutputMapper } from '../dtos/user-output'
 import { UseCase } from '@/shared/application/usecases/use-case'
 
 type GetUserInput = {
@@ -13,6 +13,6 @@ export class GetUserUseCase implements UseCase<GetUserInput, GetUserOutput> {
 
   async execute(input: GetUserInput): Promise<GetUserOutput> {
     const entity = await this.userRepository.findById(input.id)
-    return entity.toJSON()
+    return UserOutputMapper.toOutput(entity)
   }
 }
