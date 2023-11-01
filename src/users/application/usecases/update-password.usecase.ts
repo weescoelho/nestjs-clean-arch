@@ -4,7 +4,7 @@ import { UseCase } from '@/shared/application/usecases/use-case'
 import { InvalidPasswordError } from '@/shared/application/errors/invalid-password-error'
 import { HashProvider } from '@/shared/application/providers/hash-provider'
 
-type UpdatePasswordInput = {
+export type UpdatePasswordInput = {
   id: string
   password: string
   oldPassword: string
