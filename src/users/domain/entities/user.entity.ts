@@ -21,9 +21,12 @@ export type UserProps = {
  */
 
 export class UserEntity extends Entity<UserProps> {
-  constructor(public readonly props: UserProps) {
+  constructor(
+    public readonly props: UserProps,
+    id?: string,
+  ) {
     UserEntity.validate(props)
-    super(props)
+    super(props, id)
     this.props.createdAt = this.props.createdAt ?? new Date()
   }
 
