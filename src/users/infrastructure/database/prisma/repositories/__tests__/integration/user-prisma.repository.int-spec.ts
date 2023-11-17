@@ -94,6 +94,7 @@ describe('UserPrismaRepository integration tests', () => {
       searchOutput.items.forEach((item, index) => {
         expect(item).toBeInstanceOf(UserEntity)
       })
+      expect(searchOutput.items.length).toBe(15)
     })
   })
 })
