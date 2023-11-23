@@ -24,8 +24,6 @@
   <!-- <img alt="Github stars" src="https://img.shields.io/github/stars/weescoelho/nestjs-clean-arch?color=56BEB8" /> -->
 </p>
 
-Status
-
 <h4 align="center"> 
 	🚧  Nestjs Clean Arch 🚀 Em construção...  🚧
 </h4>
@@ -50,7 +48,7 @@ Este repositório contem um exemplo de como implementar o Clean Architecture em 
 
 ## :sparkles: Funcionalidades
 
-:heavy_check_mark: CRUD de usuários;\
+:heavy_check_mark: CRUD de usuários;
 
 ## :rocket: Tecnologias
 
