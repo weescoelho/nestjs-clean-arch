@@ -98,7 +98,7 @@ describe('UserPrismaRepository integration tests', () => {
     )
   })
 
-  it('should update a entity', async () => {
+  it('should delete a entity', async () => {
     const entity = new UserEntity(UserDataBuilder({}))
     const newUser = await prismaService.user.create({
       data: entity.toJSON(),
