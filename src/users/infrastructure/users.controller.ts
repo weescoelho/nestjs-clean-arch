@@ -19,12 +19,18 @@ import { UpdateUserUseCase } from '../application/usecases/update-user.usecase'
 import { UpdatePasswordUseCase } from '../application/usecases/update-password.usecase'
 import { DeleteUserUseCase } from '../application/usecases/delete-user.usecase'
 import { GetUserUseCase } from '../application/usecases/getuser.usecase'
-import { ListUsersUseCase } from '../application/usecases/listusers.usecase'
+import {
+  ListUsersOutput,
+  ListUsersUseCase,
+} from '../application/usecases/listusers.usecase'
 import { SignInDto } from './dtos/signin.dto'
 import { ListUsersDto } from './dtos/list-users.dto'
 import { UpdatePasswordDto } from './dtos/update-password.dto'
 import { UserOutput } from '../application/dtos/user-output'
-import { UserPresenter } from './presenters/user.presenter'
+import {
+  UserCollectionPresenter,
+  UserPresenter,
+} from './presenters/user.presenter'
 
 @Controller('users')
 export class UsersController {
@@ -53,6 +59,10 @@ export class UsersController {
     return new UserPresenter(output)
   }
 
+  static listUsersToResponse(output: ListUsersOutput) {
+    return new UserCollectionPresenter(output)
+  }
+
   @Post()
   async create(@Body() signUpDto: SignUpDto) {
     const output = await this.signUpUseCase.execute(signUpDto)
@@ -68,7 +78,8 @@ export class UsersController {
 
   @Get()
   async search(@Query() searchParams: ListUsersDto) {
-    return this.listUsersUseCase.execute(searchParams)
+    const output = await this.listUsersUseCase.execute(searchParams)
+    return UsersController.listUsersToResponse(output)
   }
 
   @Get(':id')
