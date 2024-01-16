@@ -63,17 +63,21 @@ describe('UsersController unit tests', () => {
       execute: jest.fn().mockResolvedValue(Promise.resolve(output)),
     }
 
+    const mockAuthService = {
+      generateJwt: jest.fn().mockResolvedValue(Promise.resolve(output)),
+    }
+
     sut['signInUseCase'] = mockSignInUseCase as any
+    sut['authService'] = mockAuthService as any
 
     const input: SignInDto = {
       email: 'test@test.com',
       password: '123456',
     }
 
-    const presenter = await sut.login(input)
+    const result = await sut.login(input)
+    expect(result).toEqual(output)
     expect(mockSignInUseCase.execute).toHaveBeenCalledWith(input)
-    expect(presenter).toBeInstanceOf(UserPresenter)
-    expect(presenter).toStrictEqual(new UserPresenter(output))
   })
 
   it('should update a user', async () => {
