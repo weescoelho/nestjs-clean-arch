@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       postgres:
-        image: bitname/postgresql
+        image: bitnami/postgresql
         ports:
           - 5232:5432
         env:
