@@ -50,6 +50,10 @@ Este repositório contem um exemplo de como implementar o Clean Architecture em 
 
 :heavy_check_mark: CRUD de usuários;
 
+## :sparkles: Testes
+
+- Testes E2E - Em andamento
+
 ## :rocket: Tecnologias
 
 As seguintes ferramentas foram usadas na construção do projeto:
