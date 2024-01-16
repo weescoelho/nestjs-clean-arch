@@ -10,7 +10,7 @@ jobs:
       postgres:
         image: bitnami/postgresql
         ports:
-          - 5232:5432
+          - 5432:5432
         env:
           POSTGRESQL_USERNAME: postgres
           POSTGRESQL_PASSWORD: docker
