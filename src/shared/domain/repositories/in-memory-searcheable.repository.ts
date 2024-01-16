@@ -47,7 +47,6 @@ export abstract class InMemorySearcheableRepository<E extends Entity>
   ): Promise<E[]> {
     if (!sort) return items
     if (!sortDir) sortDir = 'desc'
-    console.log({ sort, sortDir })
 
     if (!this.sortableFields.includes(sort)) return items
 
