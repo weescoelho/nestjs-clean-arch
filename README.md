@@ -49,6 +49,8 @@ Este repositório contem um exemplo de como implementar o Clean Architecture em 
 ## :sparkles: Funcionalidades
 
 :heavy_check_mark: CRUD de usuários;
+:heavy_check_mark: Esteira de testes usando Github Actions;
+:heavy_check_mark: Autenticação JWT;
 
 ## :sparkles: Testes
 
